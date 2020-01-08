@@ -1,5 +1,7 @@
 Honeycomb.configure do |config|
   config.write_key = "{WRITE_KEY}"
+  config.debug = true
+
   config.dataset = "rails"
   config.notification_events = %w[
     sql.active_record
