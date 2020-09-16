@@ -9,8 +9,8 @@ module Honeycomb
       INVALID_SPAN_ID = "0000000000000000".freeze
 
       def http_trace_parser_hook(env)
-        header = env["HTTP_TRACEPARENT"]
-        parse(header)
+        traceparent = env["HTTP_TRACEPARENT"]
+        parse(traceparent)
       end
 
       def parse(serialized_trace)

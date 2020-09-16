@@ -58,19 +58,21 @@ module Honeycomb
 
     # Serialize trace headers
     module MarshalTraceContext
-      def to_trace_header
-        context = Base64.urlsafe_encode64(JSON.generate(trace.fields)).strip
+      attr_reader :create_hash
+      def to_trace_header(context: nil)
+        trace_fields = Base64.urlsafe_encode64(JSON.generate(trace.fields)).strip
         encoded_dataset = URI.encode_www_form_component(builder.dataset)
         data_to_propogate = [
           "dataset=#{encoded_dataset}",
           "trace_id=#{trace.id}",
           "parent_id=#{id}",
-          "context=#{context}",
+          "context=#{trace_fields}",
         ]
         "1;#{data_to_propogate.join(',')}"
       end
 
       def create_hash
+        puts "create_hash"
         { "X-Honeycomb-Trace" => to_trace_header }
       end
     end

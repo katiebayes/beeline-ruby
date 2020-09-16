@@ -35,7 +35,7 @@ module Honeycomb
       req = ::Rack::Request.new(env)
       hny = env["HTTP_X_HONEYCOMB_TRACE"]
 
-      custom_parser_hook = client.propagation_hooks[:custom_parser_hook]
+      custom_parser_hook = client.parser_hook
       propagation_context = parse_request(env, parser_hook: custom_parser_hook)
 
       client.start_span(

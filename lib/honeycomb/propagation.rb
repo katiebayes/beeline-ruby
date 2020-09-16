@@ -28,11 +28,7 @@ module Honeycomb
   module PropagationSerializer
     include HoneycombPropagation::MarshalTraceContext
     def create_headers
-      if custom_propagation_hook.nil?
-        create_hash
-      else
-        custom_propagation_hook.call(propagation_context)
-      end
+      propagation_hook.call(propagation_context) unless propagation_hook.nil?
     rescue StandardError => e
       raise e
     end
