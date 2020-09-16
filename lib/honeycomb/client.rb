@@ -48,6 +48,18 @@ module Honeycomb
       end
     end
 
+    def parse_incoming(env)
+      include Honeycomb::HoneycombPropagation::UnmarshalTraceContext
+      #parser = Honeycomb::HoneycombPropagation::UnmarshalTraceContext.new
+      #parser.http_trace_parser_hook(env)
+      if configuration.http_trace_parser_hook.nil?
+        configuration.http_trace_parser_hook(env)
+      else
+        parser.http_trace_parser_hook(env)
+      end
+      [nil, nil, nil, nil]
+    end
+
     def start_span(
       name:, serialized_trace: nil, propagation_context: nil, **fields
     )
