@@ -52,7 +52,6 @@ module Honeycomb
 
       def to_trace_header(context: nil)
         trace_id, span_id = context
-        puts trace_id
         unless trace_id.nil? || span_id.nil?
           return "00-#{trace_id}-#{span_id}-01"
         end
@@ -62,23 +61,6 @@ module Honeycomb
 
       def create_hash(context: nil)
         { "traceparent" => to_trace_header(context: context) }
-      end
-
-      private
-
-      def get_ids(context)
-        if context.nil?
-          trace_id = trace.id
-          span_id = id
-        else
-          trace_id, parent_span_id, trace_fields, dataset = context
-        end
-        # do not propagate malformed ids
-        if trace_id =~ TRACE_ID_REGEX && span_id =~ SPAN_ID_REGEX
-          return [trace_id, parent_span_id, trace_fields, dataset]
-        end
-
-        [nil, nil, nil, nil]
       end
     end
   end

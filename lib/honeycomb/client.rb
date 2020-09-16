@@ -51,7 +51,6 @@ module Honeycomb
     def start_span(
       name:, serialized_trace: nil, propagation_context: nil, **fields
     )
-      puts "start_span"
       if context.current_trace.nil?
         Trace.new(serialized_trace: serialized_trace,
                   builder: libhoney.builder,

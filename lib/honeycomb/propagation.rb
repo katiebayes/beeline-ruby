@@ -29,10 +29,9 @@ module Honeycomb
     include HoneycombPropagation::MarshalTraceContext
     def create_headers
       if propagation_hook.nil?
-        puts "nil hook"
         create_hash
       else
-        propagation_hook.call(propagation_context)
+        propagation_hook.call(propagation_context_from_span)
       end
     rescue StandardError => e
       raise e

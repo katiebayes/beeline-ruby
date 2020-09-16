@@ -52,8 +52,6 @@ module Honeycomb
       @presend_hook = presend_hook
       @sample_hook = sample_hook
       @propagation_hook = propagation_hook
-      puts "parse_options"
-      puts propagation_hook
     end
 
     def create_child
@@ -76,7 +74,7 @@ module Honeycomb
     end
 
     # for passing a propagation context object for a current Span
-    def propagation_context
+    def propagation_context_from_span
       trace_id = trace.id
       parent_span_id = id
       trace_fields = trace.fields
